@@ -1,4 +1,4 @@
-Nombre del Proyecto: Un título claro y conciso del proyecto.
+Nombre: GPSMapAPP
 
 Descripción:
 
