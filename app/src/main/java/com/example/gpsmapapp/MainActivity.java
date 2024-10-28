@@ -25,11 +25,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+    //Atributos
      private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
      private GoogleMap mMap;
      private FusedLocationProviderClient fusedLocationClient;
 
     @Override
+    //Metodo principal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         checkLocationPermission();
     }
-
+    //Revisar el permiso para la localisacion
     private  void checkLocationPermission(){
         if (ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},LOCATION_PERMISSION_REQUEST_CODE);
@@ -47,13 +49,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             getCurrentLocation();
         }
     }
-
+    //Obtener localizacion actual
     private void getCurrentLocation(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
+            //Al lograr obtener la ubicacion, nos mostrara la ubicacion en el mapa, tambien se añadira un marcador
             public void onSuccess(Location location) {
                 if (location != null){
                     LatLng currentLatLng = new LatLng(location.getLatitude(),location.getLongitude());
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
     }
-
+    //Metodo que obtendra la ubicacion al iniciar el mapa
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
@@ -73,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         mMap.setMyLocationEnabled(true);
     }
-
+    //Metodo que nos dara el resultado de si nos dieron permiso para acceder a la ubicacion mediante la api de google.
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE){

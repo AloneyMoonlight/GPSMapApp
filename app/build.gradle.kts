@@ -8,7 +8,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.gpsmapapp"
-        minSdk = 27
+        //Cambiamos el minsdk para que la version minima de android sea una que tenga mas seguridad.
+        minSdk = 29
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -18,7 +19,9 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            //Lo establecemos en true
+            isMinifyEnabled = true
+            //Utilizamos pro guard para ofuscar el codigo
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -32,6 +35,9 @@ android {
 }
 
 dependencies {
+    //Aseguramos la comunicacion en la red utilizando https
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    //Implementamos las dependencias para el mapa y localizacion de maps de android.
     implementation("com.google.android.gms:play-services-maps:17.0.1")
     implementation("com.google.android.gms:play-services-location:18.0.0")
     implementation(libs.appcompat)
